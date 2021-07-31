@@ -28,6 +28,7 @@ class Robot
                     end
                 end
                 # puts "Set Robot Position at #{@tile} - PositionX: #{x}, PositionY: #{y}, Facing: #{direction}"
+                # puts display_board(create_board_hash)
         end
 
         def move
@@ -44,7 +45,7 @@ class Robot
                     puts "INVALID MOVE"
                 end
                 # puts "Robot Will MOVE at PositionX: #{@positionX}, PositionY: #{@positionY}, Facing: #{@direction}"
-                place(@positionX,@positionY,@direction)
+                # place(@positionX,@positionY,@direction)
         end
 
         def left
@@ -78,17 +79,9 @@ class Robot
         end
 
         def report
-            puts "Set Robot Position at #{@tile} - PositionX: #{@positionX}, PositionY: #{@positionY}, Facing: #{@direction}"
             puts display_board(create_board_hash)
+            puts "PositionX: #{@positionX}, PositionY: #{@positionY}, Facing: #{@direction}"
         end
 
 end
 
-puts display_board(create_board_hash)
-robot1 = Robot.new
-robot1.place(1,2,"EAST")
-robot1.move
-robot1.move
-robot1.left
-robot1.move
-robot1.report
