@@ -1,7 +1,6 @@
 require './board.rb'
 
 class Robot
-    attr_reader :board
 
         def initialize(setting_robot={})
             @positionX = setting_robot[:positionX]
@@ -82,6 +81,5 @@ class Robot
             puts display_board(create_board_hash)
             puts "PositionX: #{@positionX}, PositionY: #{@positionY}, Facing: #{@direction}"
         end
-
 end
 
