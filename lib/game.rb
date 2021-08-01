@@ -71,24 +71,38 @@ def execute_game
     board_width = board_dimensions[0]
     board_height = board_dimensions[1]
     new_game = Game.new
-    apple = new_game.set_board(board_width,board_height)
-    p apple
+    new_game.set_board(board_width,board_height)
     new_commands = Commands.new
     active_commands = new_commands.user_commands
 
     active_commands.each do |command|  
+
         if command.include?(:position_x) && command.include?(:position_y) && command.include?(:position_f)
-            new_game.get_command_X(command[:position_x].to_i)
-            new_game.get_command_X(command[:position_y].to_i)
-            new_game.get_command_F(command[:position_f])
-            new_game.set_place_Command
-        end
-        new_game.display_report
+            @command_X = command[:position_x].to_i
+            @command_Y = command[:position_y].to_i
+            @command_F = command[:position_f]
+            new_game.get_command_X(@command_X)
+            new_game.get_command_Y(@command_Y)
+            new_game.get_command_F(@command_F)
+            new_game.set_place_Command()
+         end
+         if command.include?(:user_move) 
+            @command_move = command[:user_move]
+            new_game.get_command_move_N(@command_move)
+         end
+         if command.include?(:user_left) 
+             @command_first_Left = command[:user_left]
+             p @command_first_Left
+             new_game.get_command_Left(@command_left)
+         end
+         if command.include?(:user_right) 
+            @command_first_Right = command[:user_right]
+            new_game.get_command_Right(@command_right)
+         end
+    new_game.display_report
     end
 end
-    # new_game.get_command_X(0)
-    # new_game.get_command_Y(0)
-    # new_game.get_command_F("EAST")
+
     # new_game.set_place_Command
     # new_game.get_command_first_Move(true)
     # new_game.get_command_move_N(true)
