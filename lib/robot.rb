@@ -1,4 +1,5 @@
 require './board.rb'
+require './invalid_inputs.rb'
 
 class Robot
 
@@ -7,7 +8,6 @@ class Robot
             @positionY = setting_robot[:positionY]
             @direction = setting_robot[:direction]
             @bearings = setting_robot[:direction] = ["NORTH", "SOUTH", "EAST", "WEST"]
-            @tile = setting_robot[:tile]
         end
 
         def place(x,y,direction)
@@ -21,30 +21,69 @@ class Robot
                 end
                 create_board_hash.each do |key, value|
                     if value[:x] == @positionX.to_s && value[:y]  == @positionY.to_s
-                       @tile = key
+                        @positionX = value[:x].to_i
+                        @positionY = value[:y].to_i
+                       return puts "Set Robot at valid PositionX: #{x}, PositionY: #{y}, Facing: #{direction}"
                     else
-                       #  puts "POSITION NOT FOUND -- TRY AGAIN"
+                    #    return out_of_bounds_err
                     end
                 end
-                # puts "Set Robot Position at #{@tile} - PositionX: #{x}, PositionY: #{y}, Facing: #{direction}"
                 # puts display_board(create_board_hash)
         end
 
-        def move
+        def move_message
+            puts "Attempting to Move Robot to PositionX: #{@positionX}, PositionY: #{@positionY}, Facing: #{@direction}"
+        end
+
+        def move_first(x,y,direction)
+            @positionX = x
+            @positionY = y
             case @direction
                 when "NORTH"
                     @positionY +=1
+                    move_message
+                    return place(@positionX,@positionY,@direction)
                 when "SOUTH"
                     @positionY -=1
+                    move_message
+                    return place(@positionX,@positionY,@direction)
                 when "EAST"
                     @positionX +=1
+                    move_message
+                    return place(@positionX,@positionY,@direction)
                 when "WEST"
                     @positionX -=1
-                else
-                    puts "INVALID MOVE"
+                    move_message
+                    return place(@positionX, @positionY,@direction)
+                # else
+                #     puts "INVALID MOVE"
+             
                 end
-                # puts "Robot Will MOVE at PositionX: #{@positionX}, PositionY: #{@positionY}, Facing: #{@direction}"
-                # place(@positionX,@positionY,@direction)
+                # puts "Robot will MOVE to PositionX: #{@positionX}, PositionY: #{@positionY}, Facing: #{@direction}"
+                # place( @positionX, @positionY,direction)
+        end
+
+        def move_n
+            case @direction
+                when "NORTH"
+                    @positionY +=1
+                    move_message
+                    return place(@positionX,@positionY,@direction)
+                when "SOUTH"
+                    @positionY -=1
+                    move_message
+                    return place(@positionX,@positionY,@direction)
+                when "EAST"
+                    @positionX +=1
+                    move_message
+                    return place(@positionX,@positionY,@direction)
+                when "WEST"
+                    @positionX -=1
+                    move_message
+                    return place(@positionX, @positionY,@direction)             
+                end
+                # puts "Robot will MOVE to PositionX: #{@positionX}, PositionY: #{@positionY}, Facing: #{@direction}"
+                # place( @positionX, @positionY,direction)
         end
 
         def left
@@ -59,7 +98,7 @@ class Robot
                     @direction = "SOUTH"
                 else
              end
-                # puts " Robot is now FACING #{@direction}"
+                puts "Robot is now Facing #{@direction}"
         end
 
         def right
@@ -74,12 +113,11 @@ class Robot
                     @direction = "NORTH"
                 else
             end
-            # puts " Robot is now FACING #{@direction}"
+            puts "Robot is now Facing #{@direction}"
         end
 
         def report
-            puts display_board(create_board_hash)
-            puts "PositionX: #{@positionX}, PositionY: #{@positionY}, Facing: #{@direction}"
+            puts "REPORT -- PositionX: #{@positionX}, PositionY: #{@positionY}, Facing: #{@direction}"
         end
 end
 

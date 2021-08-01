@@ -26,14 +26,21 @@ class Game
             @command_F = position_f
         end
 
-        def set_place_command
+        def set_place_Command
             @create_robot.place(@command_X, @command_Y, @command_F)
         end
 
-        def get_command_Move(move_robot)
+        def get_command_first_Move(move_robot)
             @command_Move = move_robot
             if @command_Move == true
-                 @create_robot.move
+                 @create_robot.move_first(@command_X, @command_Y, @command_F)
+            end
+        end
+
+        def get_command_move_N(move_robot)
+            @command_Move = move_robot
+            if @command_Move == true
+                 @create_robot.move_n
             end
         end
 
@@ -56,16 +63,21 @@ class Game
         end
 end
 
+puts display_board(create_board_hash)
 game1 = Game.new
 game1.get_command_X(0)
 game1.get_command_Y(0)
 game1.get_command_F("NORTH")
-game1.set_place_command
-game1.get_command_Move(true)
-game1.get_command_Move(true)
+game1.set_place_Command
 game1.get_command_Right(true)
-game1.get_command_Move(true)
+game1.get_command_first_Move(true)
+game1.get_command_move_N(true)
+game1.get_command_Left(true)
 game1.display_report
+
+# game1.get_command_Move(true)
+# game1.get_command_Move(true)
+# game1.get_command_Move(true)
 
 
 
