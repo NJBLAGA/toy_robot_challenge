@@ -1,7 +1,7 @@
 require './robot.rb'
 
 def out_of_bounds_err
-    # system("clear")
+    system("clear")
     err_message
 end
 

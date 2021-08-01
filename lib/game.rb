@@ -1,7 +1,7 @@
 require './robot.rb'
 
 class Game
-    attr_reader :board, :robot
+    attr_reader :robot
 
         def initialize(inputs = {})
             @command_X = inputs[:command_X]
@@ -63,22 +63,33 @@ class Game
         end
 end
 
-puts display_board(create_board_hash)
+
 game1 = Game.new
-game1.get_command_X(0)
-game1.get_command_Y(0)
-game1.get_command_F("NORTH")
+game1.get_command_X(2)
+game1.get_command_Y(3)
+game1.get_command_F("EAST")
 game1.set_place_Command
-game1.get_command_Right(true)
 game1.get_command_first_Move(true)
 game1.get_command_move_N(true)
+game1.get_command_move_N(true)
 game1.get_command_Left(true)
+game1.get_command_move_N(true)
 game1.display_report
 
+# game1.get_command_Left(true)
+
+
+
 # game1.get_command_Move(true)
 # game1.get_command_Move(true)
 # game1.get_command_Move(true)
 
-
+# PLACE 1,2,EAST
+# MOVE
+# MOVE
+# LEFT
+# MOVE
+# REPORT
+# Output: 3,3,NORTH
 
 

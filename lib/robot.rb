@@ -8,6 +8,7 @@ class Robot
             @positionY = setting_robot[:positionY]
             @direction = setting_robot[:direction]
             @bearings = setting_robot[:direction] = ["NORTH", "SOUTH", "EAST", "WEST"]
+            @board = create_board_hash(10,10)
         end
 
         def place(x,y,direction)
@@ -19,7 +20,7 @@ class Robot
                 else
                    puts "Invalid direction -- TRY AGAIN"
                 end
-                create_board_hash.each do |key, value|
+                @board.each do |key, value|
                     if value[:x] == @positionX.to_s && value[:y]  == @positionY.to_s
                         @positionX = value[:x].to_i
                         @positionY = value[:y].to_i
