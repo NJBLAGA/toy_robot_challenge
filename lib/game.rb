@@ -65,15 +65,15 @@ end
 
 
 game1 = Game.new
-game1.get_command_X(2)
-game1.get_command_Y(3)
-game1.get_command_F("EAST")
+game1.get_command_X(0)
+game1.get_command_Y(0)
+game1.get_command_F("WEST")
 game1.set_place_Command
 game1.get_command_first_Move(true)
-game1.get_command_move_N(true)
-game1.get_command_move_N(true)
-game1.get_command_Left(true)
-game1.get_command_move_N(true)
+# game1.get_command_move_N(true)
+# game1.get_command_Left(true)
+# game1.get_command_move_N(true)
+# game1.get_command_move_N(true)
 game1.display_report
 
 # game1.get_command_Left(true)

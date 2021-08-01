@@ -1,15 +1,12 @@
 require './robot.rb'
 
-def out_of_bounds_err
+def invalid_bearings
     system("clear")
-    err_message
+    puts "The Direction command you have selected is invalid."
 end
 
-
-def err_message
-    puts "Failed to set Robot to PositionX: #{@positionX }, PositionY: #{@positionY}, Facing: #{@direction}"
-    puts ""
-    puts "Robot can not be placed at requested position."
-    puts "Would you like to try?"
-
+def report_robot_off_board
+    puts "REPORT -- Robot is off the board"
+    puts "Could not be placed within any valid deminsions of the board"
+    puts "Would You Like to Reselect your commands?"
 end
