@@ -16,4 +16,5 @@ def create_board_hash(width, height)
         end
         return board
 end
+
     

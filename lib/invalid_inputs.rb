@@ -1,4 +1,4 @@
-require './robot.rb'
+require '../robot.rb'
 
 def invalid_bearings
     system("clear")

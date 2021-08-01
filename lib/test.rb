@@ -1,10 +1,9 @@
-arr = ["move", "right", "left", "move", "place", "move", "left", "move", "report"]
+# puts "pick a number"
+# number = gets.chomp.to_i
+number = "2"
 
-puts "*---------------------------------*"
-
-
-newarr =  arr.drop_while { |command| command != "place"}
-
-
-
-puts newarr
+if number.is_a? Numeric
+        puts "Is a number =>>>> #{number}"
+else 
+    puts "not a number"
+end

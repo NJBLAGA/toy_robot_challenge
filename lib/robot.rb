@@ -1,15 +1,17 @@
-require './board.rb'
-require './invalid_inputs.rb'
+require '../board.rb'
+require '../invalid_inputs.rb'
 
 class Robot
-
         def initialize(setting_robot={})
             @positionX = setting_robot[:positionX]
             @positionY = setting_robot[:positionY]
             @direction = setting_robot[:direction]
             @bearings = setting_robot[:direction] = ["NORTH", "SOUTH", "EAST", "WEST"]
-            @board = create_board_hash(10,10)
             @setPosition = false
+        end
+
+        def set_baord(board_width, board_height)
+            @board = create_board_hash(10,10)
         end
 
         def check_bearings
@@ -135,4 +137,5 @@ class Robot
             end
         end
 end
+
 
