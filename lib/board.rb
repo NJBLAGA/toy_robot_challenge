@@ -21,12 +21,12 @@ end
     
 def display_board(board)
     puts""
-    puts game = " Robot Challenge"
-    puts boarder = "_-----------------------------_"
+    puts game = "        Robot Challenge"
+    puts boarder = "*-----------------------------*"
     counter = 25
         while counter > 0
         puts row = "| #{print_tile(board, counter -4)} | #{print_tile(board, counter -3)} | #{print_tile(board, counter - 2)} | #{print_tile(board, counter - 1)} | #{print_tile(board, counter)} |"
-        puts boarder = "_-----------------------------_"
+        puts boarder = "*-----------------------------*"
         counter -= 5
         end
     puts""
