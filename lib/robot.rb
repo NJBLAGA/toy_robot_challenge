@@ -11,7 +11,7 @@ class Robot
         end
 
         def set_baord(board_width, board_height)
-            @board = create_board_hash(10,10)
+            @board = create_board_hash(board_width,board_height)
         end
 
         def check_bearings

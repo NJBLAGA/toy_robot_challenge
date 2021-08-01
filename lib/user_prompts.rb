@@ -15,82 +15,110 @@ def construct_board
             validated_height = validate_height_is_number
             board_size = validated_width.to_i * validated_height.to_i 
             puts "You have selected a board width of #{validated_width} and a board height of #{validated_height}."
+            puts "Constructing a board with #{board_size} tiles."
                if validated_width == validated_height
                   board_dimensions.push(validated_width, validated_height)
+                  puts "------------------------------------------------------".colorize(:yellow)
                else
                   puts "Sorry, the board's width and height must be equal to each other. Try agian"
                   puts "------------------------------------------------------".colorize(:yellow)
                   return construct_board
                end
-     
-        puts "This will construct a board of #{board_size} tiles."
-        prompt = TTY::Prompt.new
-            choices = [
-                {name: 'Yes', value: 1},
-                {name: 'No', value: 2},
-            ]
-            players_input = prompt.select("Are you happy to continue?", choices)  
-                case players_input
-                    when 1
-                        return board_dimensions
-                    when 2
-                        return construct_board
-                end   
         end
+        return board_dimensions
 end
 
+
+class Commands
+    def initialize(commands =[])
+        @commands_sequence = commands
+    end
 def user_commands
-    commands_sequence = []
-      prompt = TTY::Prompt.new
+    prompt = TTY::Prompt.new
     commands = [
         {name: 'Place', value: 1},
         {name: 'Move', value: 2},
         {name: 'Left', value: 3},
         {name: 'Right', value: 4},
         {name: 'Execute Selected Commands', value: 5},
-
     ]
         players_input = prompt.select("Select Your Commands:", commands)  
-        case players_input
+            case players_input
             when 1
-                validate_place
+                place_command = prompt_place
+                @commands_sequence.push(place_command)
+                p @commands_sequence
+                puts "------------------------".colorize(:yellow)
+                user_commands
             when 2
-                validate_move
+                move_command = validate_move
+                @commands_sequence.push(move_command)
+                p  @commands_sequence
+                puts "------------------------".colorize(:yellow)
+                user_commands
             when 3
-                validate_left
+                left_command = validate_left
+                @commands_sequence.push(left_command)
+                p @commands_sequence
+                puts "------------------------".colorize(:yellow)
+                user_commands
             when 4
-                validate_right
-        end   
-end
-
-def user_prompts
-    puts "------------------------------------------------------".colorize(:yellow)
-
+                right_command = validate_right
+                @commands_sequence.push(right_command)
+                p @commands_sequence
+                puts "------------------------".colorize(:yellow)
+                user_commands
+            when 5
+                legal_commands = valid_commands(@commands_sequence)
+                    if legal_commands.length == 0
+                       puts "You need to select commands".colorize(:red)
+                       user_commands
+                    else 
+                       return legal_commands
+                    end
+            end   
+    end
 end
 
 def prompt_place
+    place_command ={}
     puts "Select position X"
+    user_position_x = gets.chomp
+    place_command[:position_x] = user_position_x
     puts "Select position Y"
+    user_position_y = gets.chomp
+    place_command[:position_y] = user_position_y
     puts "Select Direction"
+    user_position_direction = gets.chomp
+    place_command[:position_f] = user_position_direction
+    return place_command
 end
 
 def validate_move
-    puts "Select Move Command"
+    move_command ={}
+    move_command[:user_move] = true
+    puts "Move command has been added"
+    return move_command
 end
 
 def validate_left
-    puts "Select Left Command"
+    left_command ={}
+    left_command[:user_left] = true
+    puts "Left command has been added"
+    return left_command
 end
 
 def validate_right
-    puts "Select Right Command"
+    right_command ={}
+    right_command[:user_right] = true
+    puts "Right command has been added"
+    return right_command
+end
+
+def valid_commands(user_commands)
+    return legal_commands = user_commands.drop_while { |command| !command.dig(:position_x)}
+
 end
 
 
-
-
-# arr = ["move", "right", "left", "move", "place", "move", "left", "move", "report"]
-# puts "*---------------------------------*"
-# newarr =  arr.drop_while { |command| command != "place"}
-# puts newarr
 

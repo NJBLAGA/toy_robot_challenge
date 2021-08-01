@@ -1,7 +1,6 @@
 require '../robot.rb'
 
 def invalid_bearings
-    system("clear")
     puts "The Direction command you have selected is invalid."
 end
 

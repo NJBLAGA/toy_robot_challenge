@@ -9,6 +9,7 @@ class Game
             @command_Move = inputs[:command_Move]
             @command_Left = inputs[:command_Left]
             @command_Right = inputs[:command_Right]
+            # @command_Right = inputs[:command_Right]
             @create_robot = Robot.new  
         end
 
@@ -67,20 +68,35 @@ end
 
 def execute_game
     board_dimensions = construct_board
-     new_game = Game.new
-    new_game.set_board(board_dimensions[0],board_dimensions[1])
-    user_prompts
-    new_game.get_command_X(0)
-    new_game.get_command_Y(0)
-    new_game.get_command_F("EAST")
-    new_game.set_place_Command
-    new_game.get_command_first_Move(true)
-    new_game.get_command_move_N(true)
-    new_game.get_command_Left(true)
-    new_game.get_command_move_N(true)
-    new_game.get_command_move_N(true)
-    new_game.display_report
+    board_width = board_dimensions[0]
+    board_height = board_dimensions[1]
+    new_game = Game.new
+    apple = new_game.set_board(board_width,board_height)
+    p apple
+    new_commands = Commands.new
+    active_commands = new_commands.user_commands
+
+    active_commands.each do |command|  
+        if command.include?(:position_x) && command.include?(:position_y) && command.include?(:position_f)
+            new_game.get_command_X(command[:position_x].to_i)
+            new_game.get_command_X(command[:position_y].to_i)
+            new_game.get_command_F(command[:position_f])
+            new_game.set_place_Command
+        end
+        new_game.display_report
+    end
 end
+    # new_game.get_command_X(0)
+    # new_game.get_command_Y(0)
+    # new_game.get_command_F("EAST")
+    # new_game.set_place_Command
+    # new_game.get_command_first_Move(true)
+    # new_game.get_command_move_N(true)
+    # new_game.get_command_Left(true)
+    # new_game.get_command_move_N(true)
+    # new_game.get_command_move_N(true)
+    # new_game.display_report
+
 
 
 
