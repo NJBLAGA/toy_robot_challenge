@@ -11,8 +11,6 @@ def invalid_bearings
         players_input = prompt.select("Would You Like to Reselect your commands?", choices)  
         case players_input
             when 1
-                # exe_command = Commands.new
-                # exe_command.user_commands
                 execute_game
             when 2
                 main_menu
@@ -29,8 +27,6 @@ def report_invalid_move
         players_input = prompt.select("Would You Like to Reselect your commands?", choices)  
         case players_input
             when 1
-                # exe_command = Commands.new
-                # exe_command.user_commands
                 execute_game
             when 2
                 main_menu
