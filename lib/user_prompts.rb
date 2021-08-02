@@ -31,7 +31,6 @@ end
 
 class Commands
 
-end
     def initialize(commands =[])
         @commands_sequence = commands
     end
