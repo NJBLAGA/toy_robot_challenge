@@ -19,9 +19,9 @@ class Robot
         def check_bearings
             if @bearings.include? @direction
                 return true
-             else
+            else
                 return invalid_bearings
-             end
+            end
         end
 
         def check_valid_tile(x,y,direction)
@@ -36,9 +36,8 @@ class Robot
                     break
                 else
                     @skip_command = true
-                    if @on_board == true
-                    else
-                        return report_invalid_move
+                    if @setPosition == false
+                        report_invalid_move
                     end
                 end
             end
@@ -50,7 +49,7 @@ class Robot
             @positionY = y
             @direction = direction
                 if check_bearings == true 
-                    check_valid_tile(@positionX,@positionY,@direction) 
+                   check_valid_tile(@positionX,@positionY,@direction) 
                 end
         end
 
@@ -70,55 +69,38 @@ class Robot
                             @positionY -=1
                             @skip_command = false
                             return place(@positionX,@positionY,@direction)
-                        else
-                       
                         end
                          
-                    
                     when "SOUTH"
                         @positionY -=1
                         move_message
-                      
                         place(@positionX,@positionY,@direction)
                         if @skip_command == true
                             puts "That Move would result in the Robot falling -- Skipping Command"
                             @positionY +=1
-                         
-                            return place(@positionX,@positionY,@direction)
-                        else
-                         
+                            return place(@positionX,@positionY,@direction)                         
                         end
                          
                     when "EAST"
                         @positionX +=1
                         move_message
-                      
                         place(@positionX,@positionY,@direction)
                         if @skip_command == true
                             puts "That Move would result in the Robot falling -- Skipping Command"
                             @positionX -=1
-                          
-                            return place(@positionX,@positionY,@direction)
-                        else
-                           
+                            return place(@positionX,@positionY,@direction)                          
                         end
                          
-                 
                     when "WEST"
                         @positionX -=1
                         move_message
-                  
                         place(@positionX,@positionY,@direction)
                         if @skip_command == true
                             puts "That Move would result in the Robot falling -- Skipping Command"
                             @positionX +=1
-                          
-                            return place(@positionX,@positionY,@direction)
-                        else
-                        
+                        return place(@positionX,@positionY,@direction)
                         end
-                         
-                end      
+                    end      
             end
         end
 

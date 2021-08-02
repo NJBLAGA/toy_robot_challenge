@@ -8,31 +8,34 @@ def construct_board
     validate_width_is_number = board_width.to_i
     validate_height_is_number = board_height.to_i
         if validate_width_is_number <= 0 && validate_height_is_number <= 0
-            puts "Selection must be a number".colorize(:red)
-            return construct_board
+           puts "Selection must be a number".colorize(:red)
+           return construct_board
         else 
-            validated_width = validate_width_is_number
-            validated_height = validate_height_is_number
-            board_size = validated_width.to_i * validated_height.to_i 
-            puts "You have selected a board width of #{validated_width} and a board height of #{validated_height}.".colorize(:green)
-            puts "Constructing a board with #{board_size} tiles.".colorize(:green)
-               if validated_width == validated_height
-                  board_dimensions.push(validated_width, validated_height)
-                  puts sep
-               else
-                  puts "Sorry, the board's width and height must be equal to each other. Try again".colorize(:red)
-                  puts sep
-                  return construct_board
-               end
+           validated_width = validate_width_is_number
+           validated_height = validate_height_is_number
+           board_size = validated_width.to_i * validated_height.to_i 
+           puts "You have selected a board width of #{validated_width} and a board height of #{validated_height}.".colorize(:green)
+           puts "Constructing a board with #{board_size} tiles.".colorize(:green)
+              if validated_width == validated_height
+                 board_dimensions.push(validated_width, validated_height)
+                 puts sep
+              else
+                 puts "Sorry, the board's width and height must be equal to each other. Try again".colorize(:red)
+                 puts sep
+                 return construct_board
+              end
         end
         return board_dimensions
 end
 
 
 class Commands
+
+end
     def initialize(commands =[])
         @commands_sequence = commands
     end
+
 def user_commands
     puts sep = "------------------------------------------------------".colorize(:yellow)
     prompt = TTY::Prompt.new
@@ -136,7 +139,6 @@ end
 
 def valid_commands(user_commands)
     return legal_commands = user_commands.drop_while { |command| !command.dig(:position_x)}
-
 end
 
 def play_again
