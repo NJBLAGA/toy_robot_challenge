@@ -10,9 +10,9 @@ def main_menu
     puts "------------------------------------------------------------------------------------------------------".colorize(:yellow)
     Artii::Base#asciify
     a = Artii::Base.new
-    a.asciify("Toy Robot Challenege")
+    a.asciify("Toy Robot Challenge")
     system("clear")
-    puts a.asciify("Toy Robot Challenege").colorize(:red,)
+    puts a.asciify("Toy Robot Challenge").colorize(:red,)
 
     prompt = TTY::Prompt.new
     choices = [

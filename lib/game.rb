@@ -9,12 +9,12 @@ class Game
             @command_Move = inputs[:command_Move]
             @command_Left = inputs[:command_Left]
             @command_Right = inputs[:command_Right]
-            # @command_Right = inputs[:command_Right]
+            @command_Report = inputs[:command_Report]
             @create_robot = Robot.new  
         end
 
         def set_board(board_width,board_height)
-            @create_robot.set_baord(board_width, board_height) 
+            @create_robot.set_board(board_width, board_height) 
         end
 
         def get_command_X(position_x)
@@ -31,13 +31,6 @@ class Game
 
         def set_place_Command
             @create_robot.place(@command_X, @command_Y, @command_F)
-        end
-
-        def get_command_first_Move(move_robot)
-            @command_Move = move_robot
-            if @command_Move == true
-                 @create_robot.move_first(@command_X, @command_Y, @command_F)
-            end
         end
 
         def get_command_move_N(move_robot)
@@ -61,8 +54,12 @@ class Game
            end
         end
 
-        def display_report
-            @create_robot.report
+        def display_report(report)
+            @command_Report = report
+            if @command_Report == true
+                @create_robot.report
+           end
+            
         end
 end
 
@@ -74,7 +71,6 @@ def execute_game
     new_game.set_board(board_width,board_height)
     new_commands = Commands.new
     active_commands = new_commands.user_commands
-
     active_commands.each do |command|  
 
         if command.include?(:position_x) && command.include?(:position_y) && command.include?(:position_f)
@@ -91,25 +87,22 @@ def execute_game
             new_game.get_command_move_N(@command_move)
          end
          if command.include?(:user_left) 
-             @command_first_Left = command[:user_left]
-             p @command_first_Left
+             @command_left = command[:user_left]
              new_game.get_command_Left(@command_left)
          end
          if command.include?(:user_right) 
-            @command_first_Right = command[:user_right]
+            @command_right = command[:user_right]
             new_game.get_command_Right(@command_right)
          end
-    new_game.display_report
+         if command.include?(:request_report) 
+            @command_report = command[:request_report]
+            new_game.display_report(@command_report)
+         end
+            
     end
+    active_commands = []
+    play_again
 end
-
-    # new_game.set_place_Command
-    # new_game.get_command_first_Move(true)
-    # new_game.get_command_move_N(true)
-    # new_game.get_command_Left(true)
-    # new_game.get_command_move_N(true)
-    # new_game.get_command_move_N(true)
-    # new_game.display_report
 
 
 

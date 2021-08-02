@@ -7,10 +7,12 @@ class Robot
             @positionY = setting_robot[:positionY]
             @direction = setting_robot[:direction]
             @bearings = setting_robot[:direction] = ["NORTH", "SOUTH", "EAST", "WEST"]
+            @on_board = false
             @setPosition = false
+            @skip_command = false
         end
 
-        def set_baord(board_width, board_height)
+        def set_board(board_width, board_height)
             @board = create_board_hash(board_width,board_height)
         end
 
@@ -27,13 +29,20 @@ class Robot
                 if value[:x] == @positionX && value[:y]  == @positionY
                     @positionX = value[:x]
                     @positionY = value[:y]
+                    @on_board = true
                     @setPosition = true
-                    puts "Set Robot at valid PositionX: #{x}, PositionY: #{y}, Facing: #{direction}"
+                    @skip_command = false
+                    puts "Robot set at valid PositionX: #{x}, PositionY: #{y}, Facing: #{direction}"
                     break
                 else
-                    @setPosition = false
+                    @skip_command = true
+                    if @on_board == true
+                    else
+                        return report_invalid_move
+                    end
                 end
             end
+   
         end
 
         def place(x,y,direction)
@@ -49,52 +58,72 @@ class Robot
             puts "Attempting to Move Robot to PositionX: #{@positionX}, PositionY: #{@positionY}, Facing: #{@direction}"
         end
 
-        def move_first(x,y,direction)
-            @positionX = x
-            @positionY = y
-            if @setPosition == true
-            case @direction
-                when "NORTH"
-                    @positionY +=1
-                    move_message
-                    place(@positionX,@positionY,@direction)
-                when "SOUTH"
-                    @positionY -=1
-                    move_message
-                    place(@positionX,@positionY,@direction)
-                when "EAST"
-                    @positionX +=1
-                    move_message
-                    place(@positionX,@positionY,@direction)
-                when "WEST"
-                    @positionX -=1
-                    move_message
-                    place(@positionX, @positionY,@direction)            
-                end
+        def move_n
+            if @on_board == true &&  @setPosition = true
+                case @direction
+                    when "NORTH"
+                        @positionY +=1
+                        move_message
+                        place(@positionX,@positionY,@direction)
+                        if @skip_command == true
+                            puts "That Move would result in the Robot falling -- Skipping Command"
+                            @positionY -=1
+                            @skip_command = false
+                            return place(@positionX,@positionY,@direction)
+                        else
+                       
+                        end
+                         
+                    
+                    when "SOUTH"
+                        @positionY -=1
+                        move_message
+                      
+                        place(@positionX,@positionY,@direction)
+                        if @skip_command == true
+                            puts "That Move would result in the Robot falling -- Skipping Command"
+                            @positionY +=1
+                         
+                            return place(@positionX,@positionY,@direction)
+                        else
+                         
+                        end
+                         
+                    when "EAST"
+                        @positionX +=1
+                        move_message
+                      
+                        place(@positionX,@positionY,@direction)
+                        if @skip_command == true
+                            puts "That Move would result in the Robot falling -- Skipping Command"
+                            @positionX -=1
+                          
+                            return place(@positionX,@positionY,@direction)
+                        else
+                           
+                        end
+                         
+                 
+                    when "WEST"
+                        @positionX -=1
+                        move_message
+                  
+                        place(@positionX,@positionY,@direction)
+                        if @skip_command == true
+                            puts "That Move would result in the Robot falling -- Skipping Command"
+                            @positionX +=1
+                          
+                            return place(@positionX,@positionY,@direction)
+                        else
+                        
+                        end
+                         
+                end      
             end
         end
 
-        def move_n
-            if @setPosition == true
-            case @direction
-                when "NORTH"
-                    @positionY +=1
-                    move_message
-                    return place(@positionX,@positionY,@direction)
-                when "SOUTH"
-                    @positionY -=1
-                    move_message
-                    return place(@positionX,@positionY,@direction)
-                when "EAST"
-                    @positionX +=1
-                    move_message
-                    return place(@positionX,@positionY,@direction)
-                when "WEST"
-                    @positionX -=1
-                    move_message
-                    return place(@positionX, @positionY,@direction)             
-                end
-            end
+        def turning_robot
+                puts "Turn Robot #{@direction}"
         end
 
         def left
@@ -102,12 +131,16 @@ class Robot
                 case @direction
                     when "NORTH"
                         @direction = "WEST"
+                        turning_robot
                     when "SOUTH"
                         @direction = "EAST"
+                        turning_robot
                     when "EAST"
                         @direction = "NORTH"
+                        turning_robot
                     when "WEST"
                         @direction = "SOUTH"
+                        turning_robot
                 end
                 puts "Robot is now Facing #{@direction}"
             end
@@ -118,23 +151,26 @@ class Robot
                 case @direction
                     when "NORTH"
                         @direction = "EAST"
+                        turning_robot
                     when "SOUTH"
                         @direction = "WEST"
+                        turning_robot
                     when "EAST"
                         @direction = "SOUTH"
+                        turning_robot
                     when "WEST"
                         @direction = "NORTH"
+                        turning_robot
                 end
                 puts "Robot is now Facing #{@direction}"
             end
         end
 
         def report
-            if  @setPosition == false
-                return report_robot_off_board
-            else
+                puts "------------------------------------------------------".colorize(:yellow)
                 puts "REPORT -- PositionX: #{@positionX}, PositionY: #{@positionY}, Facing: #{@direction}"
-            end
+                puts "------------------------------------------------------".colorize(:yellow)
+            
         end
 end
 
