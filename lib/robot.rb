@@ -36,12 +36,8 @@ class Robot
                     break
                 else
                     @skip_command = true
-                    if @setPosition == false
-                        report_invalid_move
-                    end
                 end
             end
-   
         end
 
         def place(x,y,direction)
@@ -149,10 +145,13 @@ class Robot
         end
 
         def report
+            if @on_board  == false
+                report_invalid_move
+            else
                 puts "------------------------------------------------------".colorize(:yellow)
                 puts "REPORT -- PositionX: #{@positionX}, PositionY: #{@positionY}, Facing: #{@direction}"
                 puts "------------------------------------------------------".colorize(:yellow)
-            
+            end
         end
 end
 
