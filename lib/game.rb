@@ -1,8 +1,7 @@
-require './robot.rb'
-
+require '../robot.rb'
+require 'tty-prompt'
+   
 class Game
-    attr_reader :robot
-
         def initialize(inputs = {})
             @command_X = inputs[:command_X]
             @command_Y = inputs[:command_Y]
@@ -10,8 +9,12 @@ class Game
             @command_Move = inputs[:command_Move]
             @command_Left = inputs[:command_Left]
             @command_Right = inputs[:command_Right]
-            @create_robot = Robot.new
-            
+            @command_Report = inputs[:command_Report]
+            @create_robot = Robot.new  
+        end
+
+        def set_board(board_width,board_height)
+            @create_robot.set_board(board_width, board_height) 
         end
 
         def get_command_X(position_x)
@@ -28,13 +31,6 @@ class Game
 
         def set_place_Command
             @create_robot.place(@command_X, @command_Y, @command_F)
-        end
-
-        def get_command_first_Move(move_robot)
-            @command_Move = move_robot
-            if @command_Move == true
-                 @create_robot.move_first(@command_X, @command_Y, @command_F)
-            end
         end
 
         def get_command_move_N(move_robot)
@@ -58,38 +54,60 @@ class Game
            end
         end
 
-        def display_report
-            @create_robot.report
+        def display_report(report)
+            @command_Report = report
+            if @command_Report == true
+                @create_robot.report
+           end
+            
         end
 end
 
+def execute_game
+    board_dimensions = construct_board
+    board_width = board_dimensions[0]
+    board_height = board_dimensions[1]
+    new_game = Game.new
+    new_game.set_board(board_width,board_height)
+    new_commands = Commands.new
+    active_commands = new_commands.user_commands
+    active_commands.each do |command|  
 
-game1 = Game.new
-game1.get_command_X(0)
-game1.get_command_Y(0)
-game1.get_command_F("WEST")
-game1.set_place_Command
-game1.get_command_first_Move(true)
-# game1.get_command_move_N(true)
-# game1.get_command_Left(true)
-# game1.get_command_move_N(true)
-# game1.get_command_move_N(true)
-game1.display_report
+        if command.include?(:position_x) && command.include?(:position_y) && command.include?(:position_f)
+            @command_X = command[:position_x].to_i
+            @command_Y = command[:position_y].to_i
+            @command_F = command[:position_f]
+            new_game.get_command_X(@command_X)
+            new_game.get_command_Y(@command_Y)
+            new_game.get_command_F(@command_F)
+            new_game.set_place_Command()
+         end
+         if command.include?(:user_move) 
+            @command_move = command[:user_move]
+            new_game.get_command_move_N(@command_move)
+         end
+         if command.include?(:user_left) 
+             @command_left = command[:user_left]
+             new_game.get_command_Left(@command_left)
+         end
+         if command.include?(:user_right) 
+            @command_right = command[:user_right]
+            new_game.get_command_Right(@command_right)
+         end
+         if command.include?(:request_report) 
+            @command_report = command[:request_report]
+            new_game.display_report(@command_report)
+         end
+            
+    end
+    active_commands = []
+    play_again
+end
 
-# game1.get_command_Left(true)
 
 
 
-# game1.get_command_Move(true)
-# game1.get_command_Move(true)
-# game1.get_command_Move(true)
 
-# PLACE 1,2,EAST
-# MOVE
-# MOVE
-# LEFT
-# MOVE
-# REPORT
-# Output: 3,3,NORTH
+
 
 

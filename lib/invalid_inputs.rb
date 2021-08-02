@@ -1,12 +1,39 @@
-require './robot.rb'
+require '../robot.rb'
+require '../user_prompts.rb'
 
 def invalid_bearings
-    system("clear")
     puts "The Direction command you have selected is invalid."
+    prompt = TTY::Prompt.new
+    choices = [
+        {name: 'Yes', value: 1},
+        {name: 'No', value: 2},
+    ]
+        players_input = prompt.select("Would You Like to Reselect your commands?", choices)  
+        case players_input
+            when 1
+                # exe_command = Commands.new
+                # exe_command.user_commands
+                execute_game
+            when 2
+                main_menu
+        end   
 end
 
-def report_robot_off_board
-    puts "REPORT -- Robot is off the board"
-    puts "Could not be placed within any valid deminsions of the board"
-    puts "Would You Like to Reselect your commands?"
+def report_invalid_move
+    puts "INVALID MOVE -- Robot will not be placed on the board."
+    prompt = TTY::Prompt.new
+    choices = [
+        {name: 'Yes', value: 1},
+        {name: 'No', value: 2},
+    ]
+        players_input = prompt.select("Would You Like to Reselect your commands?", choices)  
+        case players_input
+            when 1
+                # exe_command = Commands.new
+                # exe_command.user_commands
+                execute_game
+            when 2
+                main_menu
+        end   
 end
+

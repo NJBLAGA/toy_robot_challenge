@@ -1,6 +1,5 @@
 def create_board_hash(width, height)
     board_size = width * height
-    # puts board_size
     board = {}
     tile = 1
     positionX = 0
@@ -16,4 +15,6 @@ def create_board_hash(width, height)
         end
         return board
 end
+
+
     
