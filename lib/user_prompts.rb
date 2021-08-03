@@ -1,14 +1,18 @@
+# Prompts player to select a board width and height.
+# Validate if numbers are allowed.
+# Displays to the player the selected numbers and the size of the board.
+# Pushes number into empty array denoted as board_dimensions
 def construct_board
     board_dimensions  = []
-    puts "Select board width".colorize(:green)
+    puts "Select board width between 1 and 500".colorize(:green)
     board_width = gets.chomp
-    puts "Select board height".colorize(:green)
+    puts "Select board height between 1 and 500".colorize(:green)
     board_height = gets.chomp
     puts sep = "------------------------------------------------------".colorize(:yellow)
     validate_width_is_number = board_width.to_i
     validate_height_is_number = board_height.to_i
-        if validate_width_is_number <= 0 && validate_height_is_number <= 0
-           puts "Selection must be a number".colorize(:red)
+        if validate_width_is_number <= 0 || validate_height_is_number > 500 && validate_height_is_number <= 0 || validate_height_is_number > 500
+           puts "Selection must be a number and between 1 and 500".colorize(:red)
            return construct_board
         else 
            validated_width = validate_width_is_number
@@ -34,7 +38,7 @@ class Commands
     def initialize(commands =[])
         @commands_sequence = commands
     end
-
+# Prompts player to make a selection of commands they wish to execute.
 def user_commands
     puts sep = "------------------------------------------------------".colorize(:yellow)
     prompt = TTY::Prompt.new
@@ -89,7 +93,7 @@ def user_commands
             end   
     end
 end
-
+# When called, prompts the player to select a x,y position and direction.
 def prompt_place
     place_command ={}
     puts "Position X and Y Selection:".colorize(:green)
@@ -107,46 +111,46 @@ def prompt_place
     place_command[:position_f] = user_position_direction
     return place_command
 end
-
+# If Move is selected, adds it to the move_command hash.
 def validate_move
     move_command ={}
     move_command[:user_move] = true
     puts "Move command has been added".colorize(:green)
     return move_command
 end
-
+# If Left is selected, adds it to the move_command hash.
 def validate_left
     left_command ={}
     left_command[:user_left] = true
     puts "Left command has been added".colorize(:green)
     return left_command
 end
-
+# If Right is selected, adds it to the move_command hash.
 def validate_right
     right_command ={}
     right_command[:user_right] = true
     puts "Right command has been added".colorize(:green)
     return right_command
 end
-
+# If Report is selected, adds it to the move_command hash.
 def validate_report
     report_command ={}
     report_command[:request_report] = true
     puts "Report command has been added".colorize(:green)
     return report_command
 end
-
+# Checks the command array, drops any command that occurs before a valid Place command.
 def valid_commands(user_commands)
     return legal_commands = user_commands.drop_while { |command| !command.dig(:position_x)}
 end
-
+# When called, prompts the player if they wish to play agian or be redirected to the main menu.
 def play_again
     prompt = TTY::Prompt.new
     choices = [
         {name: 'Yes', value: 1},
         {name: 'No', value: 2},
     ]
-        players_input = prompt.select("Would You like to play agian?", choices)  
+        players_input = prompt.select("Would You like to play again?", choices)  
         case players_input
             when 1
                 execute_game

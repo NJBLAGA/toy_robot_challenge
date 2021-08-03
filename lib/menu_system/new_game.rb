@@ -1,6 +1,7 @@
 require '../user_prompts.rb'
 require '../game.rb'
 
+# Starts a new game and will either call execute method or main_menu method
 def new_game
     puts "Start A New Game?".colorize(:light_magenta,)
     puts "------------------------------------------------------".colorize(:yellow)
