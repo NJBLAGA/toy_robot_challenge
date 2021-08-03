@@ -1,6 +1,8 @@
 require '../robot.rb'
 require '../user_prompts.rb'
 
+# When called informs the player, the direction they have entered is an invalid direction
+# Prompts them to either play agian or redirects them to the main menu.
 def invalid_bearings
     puts "The Direction command you have selected is invalid."
     prompt = TTY::Prompt.new
@@ -17,6 +19,8 @@ def invalid_bearings
         end   
 end
 
+# When called will inform the player that the initial place command was a illegal move, an the Robot was not place on the board.
+# Prompts them to either play agian or redirects them to the main menu.
 def report_invalid_move
     puts "INVALID MOVE -- Robot will not be placed on the board."
     prompt = TTY::Prompt.new
@@ -32,4 +36,3 @@ def report_invalid_move
                 main_menu
         end   
 end
-

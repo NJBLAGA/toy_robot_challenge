@@ -1,3 +1,4 @@
+# Takes 2 args, when called -- creates the board(hash) using the width arg as the x-axis and the height arg as the y-axis.
 def create_board_hash(width, height)
     board_size = width * height
     board = {}
@@ -16,5 +17,3 @@ def create_board_hash(width, height)
         return board
 end
 
-
-    

@@ -4,7 +4,7 @@ require 'tty-prompt'
 require './new_game.rb'
 require './exit.rb'
 
-
+# Starts Game -- gives player access to menu system
 def main_menu
     puts "------------------------------------------------------------------------------------------------------".colorize(:yellow)
     Artii::Base#asciify
@@ -20,7 +20,6 @@ def main_menu
     ]
         players_input = prompt.select("Select An Option:", choices)  
         case players_input
-        # Using above assgined values to use case statement below.
             when 1
                 new_game
             when 2
